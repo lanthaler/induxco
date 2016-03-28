@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="counter-card">
+  <template strip-whitespace>
+    <paper-card heading="Counter">
+      <div class="card-content">
+        Value: <span>{{value}}</span>
+      </div>
+      <div class="card-actions">
+        <paper-button on-tap="handleIncrease">Increase</paper-button>
+      </div>
+    </paper-card>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'counter-card',
+
+      properties: {
+        /**
+         * The value of the counter.
+         */
+        value: {
+          type: Number,
+          value: 0,
+          reflectToAttribute: true,
+          notify: true
+        }
+      },
+
+      handleIncrease: function() {
+        this.fire('increase', { value: this.value });
+      }
+    });
+  </script>
+</dom-module>
