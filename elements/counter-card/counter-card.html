@@ -4,7 +4,7 @@
 
 <dom-module id="counter-card">
   <template strip-whitespace>
-    <paper-card heading="Counter">
+    <paper-card heading="{{heading}}">
       <div class="card-content">
         Value: <span>{{value}}</span>
       </div>
@@ -19,6 +19,14 @@
       is: 'counter-card',
 
       properties: {
+        /**
+         * The card header.
+         */
+        heading: {
+          type: String,
+          value: 'Counter'
+        },
+
         /**
          * The value of the counter.
          */
