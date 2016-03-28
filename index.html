@@ -3,9 +3,14 @@
     <title>Induxco</title>
     <meta charset="utf-8">
     <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script>
+      window.Polymer = {
+        dom: 'shadow'
+      };
+    </script>
     <link rel="import" href="elements/counter-card/counter-card.html">
   </head>
   <body>
-  <counter-card value=1></counter-card>
   </body>
+  <script src="/static/bundle.js"></script>
 </html>
