@@ -31,7 +31,10 @@
       },
 
       handleIncrease: function() {
-        this.fire('increase', { value: this.value });
+        var event = this.fire('increase', { value: this.value }, { cancelable: true });
+        if (!event.defaultPrevented) {
+          this.value += 1;
+        }
       }
     });
   </script>
