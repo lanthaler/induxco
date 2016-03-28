@@ -1,0 +1,31 @@
+{
+  "name": "induxco",
+  "description": "A proof of concept combining Redux, JSX, Incremental DOM, and Web Components (Polymer)",
+  "authors": [
+    "Markus Lanthaler <mail@markus-lanthaler.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Redux",
+    "Incremental",
+    "DOM",
+    "incremental-dom",
+    "Web",
+    "Components",
+    "Polymer",
+    "JSX"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^0.7.21",
+    "paper-card": "PolymerElements/paper-card#^1.1.1",
+    "paper-button": "PolymerElements/paper-button#^1.0.11"
+  }
+}
