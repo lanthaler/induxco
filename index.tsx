@@ -1,5 +1,3 @@
-/* jshint esnext: true */
-
 // -------- Actions and action creators --------
 
 function makeActionCreator(type, ...argNames) {
