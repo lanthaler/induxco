@@ -9,7 +9,8 @@
         Value: <span>{{value}}</span>
       </div>
       <div class="card-actions">
-        <paper-button on-tap="handleIncrease">Increase</paper-button>
+        <paper-button on-tap="handleIncrease">+</paper-button>
+        <paper-button on-tap="handleDecrease">-</paper-button>
       </div>
     </paper-card>
   </template>
@@ -42,6 +43,13 @@
         var event = this.fire('increase', { value: this.value }, { cancelable: true });
         if (!event.defaultPrevented) {
           this.value += 1;
+        }
+      },
+
+      handleDecrease: function() {
+        var event = this.fire('decrease', { value: this.value }, { cancelable: true });
+        if (!event.defaultPrevented) {
+          this.value -= 1;
         }
       }
     });
