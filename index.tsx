@@ -4,10 +4,10 @@ function makeActionCreator(type, ...argNames) {
   return function(...args) {
     let action = { type };
     argNames.forEach((arg, index) => {
-      action[argNames[index]] = args[index]
+      action[argNames[index]] = args[index];
     });
     return action;
-  }
+  };
 }
 
 const INITIALIZE_APP = 'INITIALIZE_APP';
@@ -25,7 +25,7 @@ const toggleButton = makeActionCreator(TOGGLE_BUTTON, 'checked');
 
 // ---------------- Reducers -------------------
 
-const counter = (state = 0, action, buttonState : boolean) => {
+const counter = (state = 0, action, buttonState: boolean) => {
   switch (action.type) {
     case INCREMENT_COUNTER:
       if ((state >= 10 ) && buttonState) {
@@ -70,7 +70,7 @@ function renderIdom(state) {
 
 // -------------------- App --------------------
 
-import { createStore, combineReducers } from 'redux';
+import createStore from 'redux';
 import * as IncrementalDOM from 'incremental-dom';
 
 const rootReducer = (state = {}, action) => {
