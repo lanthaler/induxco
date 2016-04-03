@@ -1,0 +1,75 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="random-gif">
+  <style>
+    paper-card {
+      --paper-card-header-image: {
+        min-width: 200px;
+        max-width: 200px;
+        min-height: 200px;
+        max-height: 200px;
+      }
+      --paper-card-header-image-text: {
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        display: block;
+        left: 0;
+        right: 0;
+      }
+    }
+  </style>
+  <template strip-whitespace>
+    <paper-card heading="{{topic}}" image="{{url}}">
+      <div class="card-actions">
+        <paper-button on-tap="handleNewGif">More</paper-button>
+      </div>
+    </paper-card>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'random-gif',
+
+      properties: {
+        /**
+         * The card header.
+         */
+        topic: {
+          type: String,
+          value: 'None'
+        },
+
+        url: {
+          type: String,
+          reflectToAttribute: true,
+          notify: true
+        }
+      },
+
+      ready: function() {
+        this.loadRandomGif();
+      },
+
+      handleNewGif: function() {
+        var event = this.fire('new-gif', { url: this.url }, { cancelable: true });
+        if (!event.defaultPrevented) {
+          this.loadRandomGif();
+        }
+      },
+
+      loadRandomGif: function() {
+        fetch(`https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&topic=${this.topic}`)
+          .then(function(result) {
+            return result.json();
+          }).then(function (result) {
+            this.url = result.data.image_url;
+          }.bind(this)).catch(function() {
+            this.url = null;
+          }.bind(this));
+      }
+    });
+  </script>
+</dom-module>

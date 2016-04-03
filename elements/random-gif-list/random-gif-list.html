@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../random-gif/random-gif.html">
+
+<dom-module id="random-gif-list">
+  <template strip-whitespace>
+    <style>
+      random-gif {
+        display: block;
+        margin-bottom: 1em;
+      }
+    </style>
+    <h2>Random Gif List</h2>
+    <paper-input placeholder="Topic" value="{{topic}}"></paper-input>
+    <paper-button on-tap="handleAddRandomGif">Add</paper-button>
+    <div id="list"></div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'random-gif-list',
+
+      properties: {
+        topic: {
+          type: String
+        },
+      },
+
+      handleAddRandomGif: function() {
+        var gif = document.createElement('random-gif');
+        gif.setAttribute('topic', this.topic)
+        Polymer.dom(this.$.list).appendChild(gif);
+      },
+    });
+  </script>
+</dom-module>

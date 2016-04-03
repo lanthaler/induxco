@@ -1,0 +1,38 @@
+<link rel="import" href="../random-gif-pair/random-gif-pair.html">
+
+<dom-module id="random-gif-pair-pair">
+  <template strip-whitespace>
+    <h2>Random Gif Pair Pair</h2>
+    <p>
+      <random-gif-pair left-topic="{{pair-top-left-topic}}" right-topic="{{pair-top-right-topic}}"></random-gif-pair>
+      <random-gif-pair left-topic="{{pair-bottom-left-topic}}" right-topic="{{pair-bottom-right-topic}}"></random-gif-pair>
+    </p>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'random-gif-pair-pair',
+
+      properties: {
+        pairTopLeftTopic: {
+          type: String,
+          value: 'None Top Pair Left'
+        },
+
+        pairTopRightTopic: {
+          type: String,
+          value: 'None Top Pair Right'
+        }
+      },
+      pairBottomLeftTopic: {
+        type: String,
+        value: 'None Bottom Pair Left'
+      },
+
+      pairBottomRightTopic: {
+        type: String,
+        value: 'None Bottom Pair Right'
+      }
+    });
+  </script>
+</dom-module>

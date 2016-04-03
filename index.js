@@ -15,27 +15,36 @@ function makeActionCreator(type, ...argNames) {
 const INITIALIZE_APP = 'INITIALIZE_APP';
 const initializeApp = makeActionCreator(INITIALIZE_APP);
 
-const INCREMENT_VIEWS = 'INCREMENT_VIEWS';
-const incrementViews = makeActionCreator(INCREMENT_VIEWS);
+const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
+const incrementCounter = makeActionCreator(INCREMENT_COUNTER);
 
-const INCREMENT_VISITORS = 'INCREMENT_VISITORS';
-const incrementVisitors = makeActionCreator(INCREMENT_VISITORS);
+const DECREASE_COUNTER = 'DECREASE_COUNTER';
+const decreaseCounter = makeActionCreator(DECREASE_COUNTER);
+
+const TOGGLE_BUTTON = 'TOGGLE_BUTTON';
+const toggleButton = makeActionCreator(TOGGLE_BUTTON, 'checked');
 
 
 // ---------------- Reducers -------------------
 
-const views = (state = 0, action) => {
+const counter = (state = 0, action, buttonState) => {
   switch (action.type) {
-    case INCREMENT_VIEWS:
-      return state + 1;
+    case INCREMENT_COUNTER:
+      if ((state >= 10 ) && buttonState) {
+        return state + 2;
+      }
+      else {
+        return state + 1;
+      }
+    case DECREASE_COUNTER:
+      return state - 1;
   }
   return state;
 };
 
-const visitors = (state = 0, action) => {
-  switch (action.type) {
-    case INCREMENT_VISITORS:
-      return state + 1;
+const button = (state = 0, action) => {
+  if (action.type === TOGGLE_BUTTON) {
+    return action.checked === true;
   }
   return state;
 };
@@ -45,10 +54,18 @@ const visitors = (state = 0, action) => {
 
 function renderIdom(state) {
   return <div>
-      <h1>This is the first <strong>IncrementalDOM</strong> demo</h1>
-      <p>Sum of views and visitors: {state.views + state.visitors}</p>
-      <counter-card heading="Views" value={state.views} onIncrement={incrementViews}></counter-card>
-      <counter-card heading="Visitors" value={state.visitors} onIncrement={incrementVisitors}></counter-card>
+      <h1>Scalable Frontend with Redux, Web Components, and Incremental DOM</h1>
+      <p>This project is a demo addressing the problem raised at
+        <a href="https://github.com/slorber/scalable-frontend-with-elm-or-redux">slorber/scalable-frontend-with-elm-or-redux</a>
+        with a combination of Redux, Incremental DOM, and Web Components (Polymer).</p>
+      <counter-card heading="Counter" value={state.counter} onIncrement={incrementCounter} onDecrease={decreaseCounter}></counter-card>
+      <p>Button <paper-toggle-button onChange={toggleButton}></paper-toggle-button></p>
+      <random-gif topic="cats"></random-gif>
+      <hr />
+      <random-gif-pair left-topic="Left" right-topic="Right"></random-gif-pair>
+      <random-gif-pair-pair pair-top-left-topic="Top left" pair-top-right-topic="Top right" pair-bottom-left-topic="Bottom left" pair-bottom-right-topic="Bottom right"></random-gif-pair-pair>
+      <random-gif-list></random-gif-list>
+      <p></p>
     </div>;
 }
 
@@ -58,7 +75,11 @@ function renderIdom(state) {
 import { createStore, combineReducers } from 'redux';
 import * as IncrementalDOM from 'incremental-dom';
 
-const rootReducer = combineReducers({views, visitors});
+const rootReducer = (state = {}, action) => {
+  let b = button(state.button, action);
+  let c = counter(state.counter, action, b);
+  return { button: b, counter: c };
+};
 let store = createStore(rootReducer);
 
 let unsubscribe = store.subscribe(() => {
@@ -66,11 +87,27 @@ let unsubscribe = store.subscribe(() => {
   IncrementalDOM.patch(document.body, renderIdom, store.getState());
 });
 
-// TODO: Event listener should be registered automatically
+// TODO: Event listeners should be registered automatically
 window.addEventListener('increase', (e) => {
   if (e.target.onIncrement) {
     e.preventDefault();
     store.dispatch(e.target.onIncrement());
+  }
+});
+window.addEventListener('decrease', (e) => {
+  if (e.target.onDecrease) {
+    e.preventDefault();
+    store.dispatch(e.target.onDecrease());
+  }
+});
+window.addEventListener('new-gif', (e) => {
+  store.dispatch(incrementCounter());
+});
+window.addEventListener('change', (e) => {
+  if (e.target.onChange) {
+    e.preventDefault();
+    console.log(e.target.checked);
+    store.dispatch(e.target.onChange(e.target.checked));
   }
 });
 
