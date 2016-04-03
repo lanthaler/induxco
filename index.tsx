@@ -27,7 +27,7 @@ const toggleButton = makeActionCreator(TOGGLE_BUTTON, 'checked');
 
 // ---------------- Reducers -------------------
 
-const counter = (state = 0, action, buttonState) => {
+const counter = (state = 0, action, buttonState : boolean) => {
   switch (action.type) {
     case INCREMENT_COUNTER:
       if ((state >= 10 ) && buttonState) {
@@ -42,7 +42,7 @@ const counter = (state = 0, action, buttonState) => {
   return state;
 };
 
-const button = (state = 0, action) => {
+const button = (state = false, action) => {
   if (action.type === TOGGLE_BUTTON) {
     return action.checked === true;
   }
@@ -83,7 +83,7 @@ const rootReducer = (state = {}, action) => {
 let store = createStore(rootReducer);
 
 let unsubscribe = store.subscribe(() => {
-  console.log(store.getState())
+  console.log(store.getState());
   IncrementalDOM.patch(document.body, renderIdom, store.getState());
 });
 

@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "jsx": "preserve",
+        "target": "es6",
+        "noImplicitAny": false,
+        "sourceMap": true
+    },
+    "exclude": [
+        "typings/main.d.ts",
+        "typings/main",
+        "node_modules",
+        "bower_components"
+    ]
+}
